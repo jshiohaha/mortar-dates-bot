@@ -13,8 +13,9 @@ from src.constants import PYMONGO_DB_NAME, PYMONGO_HOSTNAME, PYMONGO_USERNAME, P
 # print(generate_response({
 #     'text': '@mortarbot new dates'
 # }))
+
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb+srv://{}:{}@{}/{}?retryWrites=true&w=majority".format(PYMONGO_USERNAME, PYMONGO_PASSWORD,
+app.config["MONGO_URI"] = "mongodb://{}:{}@{}/{}".format(PYMONGO_USERNAME, PYMONGO_PASSWORD,
                                                                                          PYMONGO_HOSTNAME, PYMONGO_DB_NAME)
 
 mongo = PyMongo(app)
