@@ -1,5 +1,4 @@
 [{
-    "date": "05/29/2019 00:00:00",
     "excluded": ["Greg Tracey", "Lauryn Wengert", "Lukas Hall"],
     "groupings": [
         ["Alex Otto", "Connor Eksi"],
@@ -16,7 +15,6 @@
         ["Vinny Malene", "Spencer Hosch"]
     ]
 }, {
-    "date": "08/26/2019 00:00:00",
     "excluded": ["Lukas Hall", "Greg Tracey", "Lauryn Wengert"],
     "groupings": [
         ["Alex Otto", "Cooper Wright"],
@@ -33,7 +31,6 @@
         ["Vinny Malene", "Hannah O'Neill"]
     ]
 }, {
-    "date": "09/2/2019 00:00:00",
     "excluded": ["Lukas Hall"],
     "groupings": [
         ["Alex Otto", "Braden Dvorak"],
