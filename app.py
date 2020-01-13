@@ -49,10 +49,10 @@ def webhook():
     msg_sender = data['name']
     # ignore our own messages
     if msg_sender != BOT_NAME:
-        db = MONGO_CLIENT[PYMONGO_DB_NAME]
+        db = MONGO_CLIENT[str(PYMONGO_DB_NAME)]
         response = str(db) + "\n\n"
-        response += str(db[PYMONGO_GRAPH_COLLECTION]) + "\n\n"
-        response += str(db[PYMONGO_GROUPING_COLLECTION])
+        response += str(db[str(PYMONGO_GRAPH_COLLECTION)]) + "\n\n"
+        response += str(db[str(PYMONGO_GROUPING_COLLECTION)])
         send_message(response)
     # data = request.get_json()
     # if should_generate_response(data):
