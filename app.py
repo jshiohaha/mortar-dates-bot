@@ -18,7 +18,7 @@ def send_message(msg):
     }
 
     request = Request(url, urlencode(data).encode())
-    urlopen(request).read().decode()
+    json = urlopen(request).read().decode()
 
 
 @app.route('/', methods=['POST'])
