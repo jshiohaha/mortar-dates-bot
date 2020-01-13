@@ -1,32 +1,23 @@
 import os
 import json
+import pymongo
 
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 from flask import Flask, request
-from flask_pymongo import PyMongo
 
 from src.main import generate_response
-from src.constants import PYMONGO_DB_NAME, PYMONGO_HOSTNAME, PYMONGO_USERNAME, PYMONGO_PASSWORD
+from src.constants import PYMONGO_DB_NAME, PYMONGO_HOSTNAME, PYMONGO_USERNAME, PYMONGO_PASSWORD, PYMONGO_GRAPH_COLLECTION, PYMONGO_GROUPING_COLLECTION 
 
 # print(generate_response({
 #     'text': '@mortarbot new dates'
 # }))
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://{}:{}@{}/{}".format(PYMONGO_USERNAME, PYMONGO_PASSWORD,
-                                                                                         PYMONGO_HOSTNAME, PYMONGO_DB_NAME)
-
-mongo = PyMongo(app)
+MONGO_CLIENT = pymongo.MongoClient("mongodb+srv://{}:{}@{}/".format(PYMONGO_USERNAME, PYMONGO_PASSWORD, PYMONGO_HOSTNAME))
 
 BOT_NAME = os.getenv('BOT_NAME')
-
-# user / MeXZUOjXcnWPW53q
-# welshcorgo-jkzpo.mongodb.net
-# dates_db
-# graph
-# previous_groupings
 
 def send_message(msg):
     url = 'https://api.groupme.com/v3/bots/post'
@@ -58,9 +49,10 @@ def webhook():
     msg_sender = data['name']
     # ignore our own messages
     if msg_sender != BOT_NAME:
-        response = str(mongo.db) + "\n\n"
-        response += str(mongo.db.graph) + "\n\n"
-        response += str(mongo.db.previous_groupings)
+        db = MONGO_CLIENT[PYMONGO_DB_NAME]
+        response = str(db) + "\n\n"
+        response += str(db[PYMONGO_GRAPH_COLLECTION]) + "\n\n"
+        response += str(db[PYMONGO_GROUPING_COLLECTION])
         send_message(response)
     # data = request.get_json()
     # if should_generate_response(data):
