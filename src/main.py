@@ -29,11 +29,11 @@ from pprint import pprint
 def get_current_dates():
     existing_groupings = deserialize_json(WEEKLY_GROUPINGS_FILENAME)
     current_dates = existing_groupings[len(existing_groupings)-1]
-    return format_groupings_to_readable_format(current_dates['groupings'])
+    return format_groupings_to_readable_format(current_dates['groupings'], current_dates['excluded'][0])
 
 def generate_new_dates(existing_groupings):
     graph = load_graph(GRAPH_FILENAME)
     groups = generate_new_groups(graph, existing_groupings, n=GROUP_SIZE)
-    serialize_as_json(GRAPH_FILENAME, graph)
-    update_existing_groupings_file(WEEKLY_GROUPINGS_FILENAME, existing_groupings, groups)
-    return format_groupings_to_readable_format(groups[1:])
+    # serialize_as_json(GRAPH_FILENAME, graph)
+    # update_existing_groupings_file(WEEKLY_GROUPINGS_FILENAME, existing_groupings, groups)
+    return format_groupings_to_readable_format(groups[1:], groups[0][0])

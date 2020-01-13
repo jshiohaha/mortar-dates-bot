@@ -3,11 +3,13 @@ import itertools
 def format_data_filename(dir, filename):
     return "{}/../data/{}".format(dir, filename)
 
-def format_groupings_to_readable_format(groupings):
+def format_groupings_to_readable_format(groupings, excluded_member):
     response = "Mortar Dates 🤟🏼\n\n"
     for idx in range(len(groupings)):
         group = groupings[idx]
         response += "{}: {} & {}\n".format((idx+1), group[0], group[1])
+    response += ("\n{} was left out this week 🙁. Join another date or "
+    "wait until next week.").format(excluded_member)
     return response
 
 #  ===================================
