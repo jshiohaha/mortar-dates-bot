@@ -34,6 +34,6 @@ def get_current_dates():
 def generate_new_dates(existing_groupings):
     graph = load_graph(GRAPH_FILENAME)
     groups = generate_new_groups(graph, existing_groupings, n=GROUP_SIZE)
-    serialize_as_json(GRAPH_FILENAME, graph)
-    update_existing_groupings_file(WEEKLY_GROUPINGS_FILENAME, existing_groupings, groups)
+    # serialize_as_json(GRAPH_FILENAME, graph)
+    # update_existing_groupings_file(WEEKLY_GROUPINGS_FILENAME, existing_groupings, groups)
     return format_groupings_to_readable_format(groups[1:])
