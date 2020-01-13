@@ -54,13 +54,14 @@ def should_generate_response(data):
 
 @app.route('/', methods=['POST'])
 def webhook():
+    data = request.get_json()
     msg_sender = data['name']
     # ignore our own messages
     if msg_sender != BOT_NAME:
-        print(mongo.db.graph)
-        print(mongo.db.previous_groupings)
-
-        send_message(str(mongo.db))
+        response = str(mongo.db) + "\n\n"
+        response += str(mongo.db.graph) + "\n\n"
+        response += str(mongo.db.previous_groupings)
+        send_message(response)
     # data = request.get_json()
     # if should_generate_response(data):
     #     response = generate_response(data)
