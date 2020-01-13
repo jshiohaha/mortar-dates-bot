@@ -6,7 +6,7 @@ from urllib.request import Request, urlopen
 
 from flask import Flask, request
 
-# from mortarboard_dates_bot.src.groupings
+from mortarboard_dates_bot.src.main import generate_response
 
 app = Flask(__name__)
 
@@ -35,21 +35,6 @@ def should_generate_response(data):
     if msg_first_word[1:] != BOT_NAME:
         return False
     return True
-
-
-CURRENT_DATES_COMMAND = "current dates"
-NEW_DATES_COMMAND = "new dates"
-HELP_COMMAND = "help"
-def generate_response(data):
-    msg = " ".join(data['text'].split(" ")[1:])
-    if msg == CURRENT_DATES_COMMAND:
-        return "current dates"
-    elif msg == NEW_DATES_COMMAND:
-        return "new dates"
-    elif msg == HELP_COMMAND:
-        return "possible commands"
-    return None
-
 
 @app.route('/', methods=['POST'])
 def webhook():

@@ -1,0 +1,50 @@
+[{
+    "excluded": ["Greg Tracey", "Lauryn Wengert", "Lukas Hall"],
+    "groupings": [
+        ["Alex Otto", "Connor Eksi"],
+        ["Braden Dvorak", "Liam Carroll"],
+        ["Bree Hurt", "Frances Munro"],
+        ["Emily Johnson", "Philip Holubeck"],
+        ["Gauri Ramesh", "Spencer Jones"],
+        ["Gitau Wambugu", "Dylan Mathers"],
+        ["Jacob Shiohira", "Cheyenne Gerlach"],
+        ["Jess Moore", "Jayden Garrett"],
+        ["Mary Greufe", "Olivia Maras"],
+        ["Nate Netz", "Hannah O'Neill"],
+        ["Olivia Miller", "Cooper Wright"],
+        ["Vinny Malene", "Spencer Hosch"]
+    ]
+}, {
+    "excluded": ["Lukas Hall", "Greg Tracey", "Lauryn Wengert"],
+    "groupings": [
+        ["Alex Otto", "Cooper Wright"],
+        ["Olivia Miller", "Braden Dvorak"],
+        ["Emily Johnson", "Connor Eksi"],
+        ["Gauri Ramesh", "Cheyenne Gerlach"],
+        ["Gitau Wambugu", "Philip Holubeck"],
+        ["Jacob Shiohira", "Dylan Mathers"],
+        ["Jess Moore", "Spencer Hosch"],
+        ["Liam Carroll", "Frances Munro"],
+        ["Mary Greufe", "Jayden Garrett"],
+        ["Nate Netz", "Spencer Jones"],
+        ["Bree Hurt", "Olivia Maras"],
+        ["Vinny Malene", "Hannah O'Neill"]
+    ]
+}, {
+    "excluded": ["Lukas Hall"],
+    "groupings": [
+        ["Alex Otto", "Braden Dvorak"],
+        ["Nate Netz", "Cheyenne Gerlach"],
+        ["Gauri Ramesh", "Dylan Mathers"],
+        ["Emily Johnson", "Cooper Wright"],
+        ["Gitau Wambugu", "Connor Eksi"],
+        ["Jacob Shiohira", "Greg Tracey"],
+        ["Bree Hurt", "Jayden Garrett"],
+        ["Jess Moore", "Hannah O'Neill"],
+        ["Liam Carroll", "Olivia Maras"],
+        ["Mary Greufe", "Spencer Hosch"],
+        ["Olivia Miller", "Frances Munro"],
+        ["Lauryn Wengert", "Philip Holubeck"],
+        ["Vinny Malene", "Spencer Jones"]
+    ]
+}]
