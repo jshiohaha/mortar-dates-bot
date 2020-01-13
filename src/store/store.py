@@ -1,9 +1,11 @@
+import pymongo
+
 from datetime import datetime
 import json
 import os
 
 from ..utils.utils import build_graph
-from ..constants import DATETIME_FORMAT, MEMBERS
+from ..constants import *
 
 #  ===========================
 #          HANDLE I/O
@@ -40,3 +42,54 @@ def update_existing_groupings_file(filename, existing_data, groups):
         "groupings": groups
     })
     serialize_as_json(filename, existing_data)
+
+
+
+class PyMongoClient:
+    hostname = PYMONGO_HOSTNAME
+    username = PYMONGO_USERNAME
+    password = PYMONGO_PASSWORD
+
+    def __init__(self):
+        self.mongoDbUrl = "mongodb+srv://{}:{}@{}/admin".format(self.username, self.hostname, self.password)
+        self.client = pymongo.MongoClient(self.mongoDbUrl)
+        self.database = None
+        self.collection = None
+
+    def _getClient(self):
+        return self.client
+
+    def _getDatabase(self):
+        return self.database
+
+    def _setDatabase(self, database):
+        self.database = self._getClient()[database]
+
+    def _getCollection(self):
+        return self.collection
+
+    def _setCollection(self, collection):
+        self.collection = self._getDatabase()[collection]
+
+    def _checkServerStatus(self):
+        serverStatusResult=self.database.command("serverStatus")
+        assert serverStatusResult is not None
+        return serverStatusResult
+
+class GraphMongoClient(PyMongoClient):
+    databaseName = PYMONGO_DB_NAME
+    collectionName = PYMONGO_GRAPH_COLLECTION
+
+    def __init__(self):
+        super().__init__()
+        self._setDatabase(self.databaseName)
+        self._setCollection(self.collectionName)
+
+class GroupingsMongoClient(PyMongoClient):
+    databaseName = PYMONGO_DB_NAME
+    collectionName = PYMONGO_GROUPING_COLLECTION
+
+    def __init__(self):
+        super().__init__()
+        self._setDatabase(self.databaseName)
+        self._setCollection(self.collectionName)
