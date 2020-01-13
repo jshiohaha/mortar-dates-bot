@@ -50,4 +50,22 @@
         ["Lauryn Wengert", "Philip Holubeck"],
         ["Vinny Malene", "Spencer Jones"]
     ]
+}, {
+    "date": "01/13/2020 00:00:00", 
+    "excluded": ["Emily Johnson"],
+    "groupings": [
+        ["Greg Tracey", "Cooper Wright"],
+        ["Olivia Miller", "Jess Moore"],
+        ["Vinny Malene", "Mary Greufe"],
+        ["Olivia Maras", "Frances Munro"],
+        ["Lukas Hall", "Lauryn Wengert"],
+        ["Philip Holubeck", "Hannah O'Neill"],
+        ["Connor Eksi", "Jacob Shiohira"],
+        ["Spencer Hosch", "Gitau Wambugu"],
+        ["Dylan Mathers", "Alex Otto"],
+        ["Bree Hurt", "Nate Netz"],
+        ["Braden Dvorak", "Jayden Garrett"],
+        ["Cheyenne Gerlach", "Spencer Jones"],
+        ["Gauri Ramesh", "Liam Carroll"]
+    ]
 }]
