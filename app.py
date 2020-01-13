@@ -6,9 +6,11 @@ from urllib.request import Request, urlopen
 
 from flask import Flask, request
 
+from mortarboard_dates_bot.src.groupings
+
 app = Flask(__name__)
 
-BOT_NAME = '@mbdates'
+BOT_NAME = os.getenv('BOT_NAME')
 
 def send_message(msg):
     url = 'https://api.groupme.com/v3/bots/post'
@@ -22,21 +24,34 @@ def send_message(msg):
     json = urlopen(request).read().decode()
 
 
-def should_respond(msg):
-    # check if message references bot name
-    if msg.split(" ")[0] != BOT_NAME:
+def should_generate_response(data):
+    msg_sender = data['name']
+    msg = data['text']
+    # ignore our own messages
+    if msg_sender == BOT_NAME:
+        return False
+    # check if message first word references bot name, ignore @ sign
+    msg_first_word = msg.split(" ")[0]
+    if msg_first_word[1:] != BOT_NAME:
         return False
     return True
+
+
+def generate_response(data):
+    msg = " ".join(data['text'].split(" ")[1:])
+    if msg == CURRENT_DATES:
+        return "current dates":
+    elif msg == NEW_DATES:
+        return "new dates":
+    return None
+
 
 @app.route('/', methods=['POST'])
 def webhook():
     data = request.get_json()
-    message = data['text']
-
-    if should_respond(message):
-        # ignore our own messages
-        if data['name'] != BOT_NAME:
-            msg = '{}, you sent "{}"'.format(data['name'], message)
-            send_message(msg)
+    if should_generate_response(data):
+        response = generate_response(data)
+        if response is not None:
+            send_message(response)
 
     return "OK", 200
