@@ -1,6 +1,6 @@
 import os
 
-from constants import *
+from src.constants import *
 from src.utils.groupings import generate_new_groups
 from src.utils.utils import format_groupings_to_readable_format
 from src.store.store import serialize_as_json, deserialize_json, load_graph, update_existing_groupings_file
