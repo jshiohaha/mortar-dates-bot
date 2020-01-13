@@ -9,7 +9,7 @@ from flask import Flask, request
 from src.main import generate_response
 
 # print(generate_response({
-#     'text': '@mortarbot help'
+#     'text': '@mortarbot new dates'
 # }))
 app = Flask(__name__)
 
