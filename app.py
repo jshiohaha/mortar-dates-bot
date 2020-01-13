@@ -15,7 +15,7 @@ from src.constants import PYMONGO_DB_NAME, PYMONGO_HOSTNAME, PYMONGO_USERNAME, P
 # }))
 
 app = Flask(__name__)
-MONGO_CLIENT = pymongo.MongoClient("mongodb+srv://{}:{}@{}/".format(PYMONGO_USERNAME, PYMONGO_PASSWORD, PYMONGO_HOSTNAME))
+MONGO_CLIENT = pymongo.MongoClient("mongodb://{}:{}@{}/".format(PYMONGO_USERNAME, PYMONGO_PASSWORD, PYMONGO_HOSTNAME))
 
 BOT_NAME = os.getenv('BOT_NAME')
 
