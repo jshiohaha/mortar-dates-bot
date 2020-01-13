@@ -8,6 +8,10 @@ HELP_COMMAND = "help"
 
 GROUP_SIZE = 2
 
+DATETIME_FORMAT = "%m/%d/%Y %H:%M:%S"
+
+MONDAY = 0
+
 MEMBERS = [
     "Alex Otto",
     "Braden Dvorak",

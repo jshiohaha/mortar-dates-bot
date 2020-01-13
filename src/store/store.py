@@ -1,8 +1,9 @@
+from datetime import datetime
 import json
 import os
 
 from ..utils.utils import build_graph
-from ..constants import MEMBERS
+from ..constants import DATETIME_FORMAT, MEMBERS
 
 #  ===========================
 #          HANDLE I/O
@@ -34,6 +35,7 @@ def update_existing_groupings_file(filename, existing_data, groups):
             groups = groups[1:]
             break
     existing_data.append({
+        "date": datetime.now().strftime(DATETIME_FORMAT),
         "excluded": [excluded_member],
         "groupings": groups
     })

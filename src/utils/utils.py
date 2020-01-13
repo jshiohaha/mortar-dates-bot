@@ -4,7 +4,11 @@ def format_data_filename(dir, filename):
     return "{}/../data/{}".format(dir, filename)
 
 def format_groupings_to_readable_format(groupings):
-    return "TODO"
+    response = "Mortar Dates 🤟🏼\n\n"
+    for idx in range(len(groupings)):
+        group = groupings[idx]
+        response += "{}: {} & {}\n".format((idx+1), group[0], group[1])
+    return response
 
 #  ===================================
 #            GRAPH UTILS
