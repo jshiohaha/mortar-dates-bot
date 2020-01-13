@@ -18,14 +18,10 @@ def generate_response(data):
         return NEW_DATES_COMMAND
     elif msg == HELP_COMMAND:
         BOT_NAME = os.getenv('BOT_NAME')
-        return
-        """Usage:
-                @{0} current dates — I will send the current week's dates.
-                @{1} new dates — I will generate new dates and send them for everyone to see 🥳.
-                @{2} help — I will return this help text letting you know how to invoke me!
-        """.format(BOT_NAME, BOT_NAME, BOT_NAME)
-    return None
-
+        return ("Usage:\n\n"
+        "@{0} current dates — I will send the current week's dates.\n"
+        "@{1} new dates — I will generate and send new dates 🥳.\n"
+        "@{2} help — I will let you know how to invoke me!").format(BOT_NAME, BOT_NAME, BOT_NAME)
 
 def generate_new_dates():
     graph = load_graph(GRAPH_FILENAME)

@@ -6,8 +6,11 @@ from urllib.request import Request, urlopen
 
 from flask import Flask, request
 
-from mortarboard_dates_bot.src.main import generate_response
+from src.main import generate_response
 
+# print(generate_response({
+#     'text': '@mortarbot help'
+# }))
 app = Flask(__name__)
 
 BOT_NAME = os.getenv('BOT_NAME')
