@@ -8,7 +8,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-BOT_NAME = 'mbdates'
+BOT_NAME = '@mbdates'
 
 def send_message(msg):
     url = 'https://api.groupme.com/v3/bots/post'
