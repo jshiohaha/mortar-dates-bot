@@ -1,8 +1,6 @@
-import pymongo
+import pymongo 
 
 from datetime import datetime
-import json
-import os
 
 from ..utils.utils import build_graph
 from ..constants import *
@@ -11,48 +9,14 @@ from ..constants import *
 #          HANDLE I/O
 #  ===========================
 
-def serialize_as_json(filename, data, open_as='w'):
-    with open(filename, open_as) as f:
-        f.write(json.dumps(data))
-
-def deserialize_json(filename):
-    data = None
-    if os.path.isfile(filename) and os.path.getsize(filename) > 0:
-        with open(filename, 'r') as f:
-            data = json.load(f)
-    return data
-
-def load_graph(filename):
-    data = deserialize_json(filename)
-    if data is None:
-        return build_graph(MEMBERS)
-    return data
-
-def update_existing_groupings_file(filename, existing_data, groups):
-    excluded_member = None
-    for idx in range(len(groups)):
-        group = groups[idx]
-        if len(group) == 1:
-            excluded_member = group[0]
-            groups = groups[1:]
-            break
-    existing_data.append({
-        "date": datetime.now().strftime(DATETIME_FORMAT),
-        "excluded": [excluded_member],
-        "groupings": groups
-    })
-    serialize_as_json(filename, existing_data)
-
-
-
 class PyMongoClient:
     hostname = PYMONGO_HOSTNAME
     username = PYMONGO_USERNAME
     password = PYMONGO_PASSWORD
 
     def __init__(self):
-        self.mongoDbUrl = "mongodb+srv://{}:{}@{}/admin".format(self.username, self.hostname, self.password)
-        self.client = pymongo.MongoClient(self.mongoDbUrl)
+        self.mongoDbUrl = "mongodb+srv://{}:{}@{}/admin?keepAlive=true&poolSize=30&autoReconnect=true&socketTimeoutMS=360000&connectTimeoutMS=360000".format(self.username, self.password, self.hostname)
+        self.client = pymongo.MongoClient(self.mongoDbUrl, port=27017)
         self.database = None
         self.collection = None
 
@@ -76,6 +40,7 @@ class PyMongoClient:
         assert serverStatusResult is not None
         return serverStatusResult
 
+
 class GraphMongoClient(PyMongoClient):
     databaseName = PYMONGO_DB_NAME
     collectionName = PYMONGO_GRAPH_COLLECTION
@@ -85,7 +50,22 @@ class GraphMongoClient(PyMongoClient):
         self._setDatabase(self.databaseName)
         self._setCollection(self.collectionName)
 
-class GroupingsMongoClient(PyMongoClient):
+    def insert_graph_instance(self, graph, date=None):
+        if date is None:
+            # date = datetime.now().strftime(DATETIME_FORMAT
+            date = datetime.now()
+        item = {
+            'date': date,
+            'graph': graph
+        }
+        self._getCollection().insert_one(item)
+
+    def get_latest_graph_instance(self):
+        result = self._getCollection().find().sort('date', pymongo.DESCENDING).limit(1)
+        return list(result)[0]
+
+
+class GroupingMongoClient(PyMongoClient):
     databaseName = PYMONGO_DB_NAME
     collectionName = PYMONGO_GROUPING_COLLECTION
 
@@ -93,3 +73,21 @@ class GroupingsMongoClient(PyMongoClient):
         super().__init__()
         self._setDatabase(self.databaseName)
         self._setCollection(self.collectionName)
+
+    def insert_grouping(self, groups, excluded_member=None, date=None):
+        if date is None:
+            # date = datetime.now().strftime(DATETIME_FORMAT)
+            date = datetime.now()
+        item = {
+            "date": date,
+            "excluded": [excluded_member],
+            "groupings": groups
+        }
+        self._getCollection().insert_one(item)
+
+    def get_all_groupings(self):
+        return list(self._getCollection().find({}))
+
+    def get_latest_grouping(self):
+        query_result = self._getCollection().find().sort('date', pymongo.DESCENDING).limit(1)
+        return list(query_result)[0]

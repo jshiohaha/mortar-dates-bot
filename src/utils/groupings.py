@@ -1,6 +1,6 @@
 import random
 
-from ..constants import GRAPH_FILENAME, MEMBERS, WEEKLY_GROUPINGS_FILENAME
+from ..constants import MEMBERS
 
 #  =================================================
 #           UPDATE GROUPINGS WITH NEW GROUPINGS
@@ -22,7 +22,6 @@ def find_excluded_member(existing_groups):
     while excluded_member is None or excluded_member in get_previously_excluded_members(existing_groups):
         excluded_member = random.choice(MEMBERS)
     return excluded_member
-
 
 def generate_new_groups(graph, existing_groups, n=2):
     groups = list()
@@ -59,4 +58,4 @@ def generate_new_groups(graph, existing_groups, n=2):
     if len(members) > 0:
         groups.append(members)
 
-    return groups
+    return groups, graph

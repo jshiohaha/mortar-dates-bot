@@ -13,11 +13,13 @@ DATETIME_FORMAT = "%m/%d/%Y %H:%M:%S"
 MONDAY = 0
 
 PYMONGO_DB_NAME = os.getenv('PYMONGO_DB_NAME')
-PYMONGO_GRAPH_COLLECTION = os.getenv('PYMONGO_GRAPH_COLLECTION')
-PYMONGO_GROUPING_COLLECTION = os.getenv('PYMONGO_GROUPING_COLLECTION')
 PYMONGO_HOSTNAME = os.getenv('PYMONGO_HOSTNAME')
 PYMONGO_USERNAME = os.getenv('PYMONGO_USERNAME')
 PYMONGO_PASSWORD = os.getenv('PYMONGO_PASSWORD')
+PYMONGO_GRAPH_COLLECTION = os.getenv('PYMONGO_GRAPH_COLLECTION')
+PYMONGO_GROUPING_COLLECTION = os.getenv('PYMONGO_GROUPING_COLLECTION')
+
+BOT_NAME = os.getenv('BOT_NAME')
 
 MEMBERS = [
     "Alex Otto",
@@ -48,7 +50,3 @@ MEMBERS = [
     "Spencer Jones",
     "Vinny Malene"
 ]
-
-DIR_NAME = os.path.dirname(os.path.realpath(__file__))
-GRAPH_FILENAME = format_data_filename(DIR_NAME, "groups.json")
-WEEKLY_GROUPINGS_FILENAME = format_data_filename(DIR_NAME, "weekly_groupings.json")
