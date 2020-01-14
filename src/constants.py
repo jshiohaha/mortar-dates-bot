@@ -1,5 +1,4 @@
 import os
-from src.utils.utils import format_data_filename
 
 # POSSIBLE BOT COMMANDS
 CURRENT_DATES_COMMAND = "current dates"
@@ -12,14 +11,14 @@ DATETIME_FORMAT = "%m/%d/%Y %H:%M:%S"
 
 MONDAY = 0
 
+BOT_NAME = os.getenv('BOT_NAME')
+
 PYMONGO_DB_NAME = os.getenv('PYMONGO_DB_NAME')
 PYMONGO_HOSTNAME = os.getenv('PYMONGO_HOSTNAME')
 PYMONGO_USERNAME = os.getenv('PYMONGO_USERNAME')
 PYMONGO_PASSWORD = os.getenv('PYMONGO_PASSWORD')
 PYMONGO_GRAPH_COLLECTION = os.getenv('PYMONGO_GRAPH_COLLECTION')
 PYMONGO_GROUPING_COLLECTION = os.getenv('PYMONGO_GROUPING_COLLECTION')
-
-BOT_NAME = os.getenv('BOT_NAME')
 
 MEMBERS = [
     "Alex Otto",

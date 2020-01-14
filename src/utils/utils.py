@@ -1,8 +1,5 @@
 import itertools
 
-def format_data_filename(dir, filename):
-    return "{}/../data/{}".format(dir, filename)
-
 def format_groupings_to_readable_format(groupings, excluded_member):
     response = "Mortar Dates 🤟🏼\n\n"
     for idx in range(len(groupings)):
