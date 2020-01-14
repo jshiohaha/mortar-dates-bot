@@ -1,9 +1,8 @@
+from datetime import datetime
 import pymongo 
 
-from datetime import datetime
-
+from ..constants.constants import PYMONGO_HOSTNAME, PYMONGO_USERNAME, PYMONGO_PASSWORD, PYMONGO_DB_NAME, PYMONGO_GRAPH_COLLECTION, PYMONGO_GROUPING_COLLECTION
 from ..utils.utils import build_graph
-from ..constants import *
 
 #  ===========================
 #          HANDLE I/O
@@ -35,11 +34,6 @@ class PyMongoClient:
     def _setCollection(self, collection):
         self.collection = self._getDatabase()[collection]
 
-    def _checkServerStatus(self):
-        serverStatusResult=self.database.command("serverStatus")
-        assert serverStatusResult is not None
-        return serverStatusResult
-
 
 class GraphMongoClient(PyMongoClient):
     databaseName = PYMONGO_DB_NAME
@@ -52,7 +46,6 @@ class GraphMongoClient(PyMongoClient):
 
     def insert_graph_instance(self, graph, date=None):
         if date is None:
-            # date = datetime.now().strftime(DATETIME_FORMAT
             date = datetime.now()
         item = {
             'date': date,
@@ -76,7 +69,6 @@ class GroupingMongoClient(PyMongoClient):
 
     def insert_grouping(self, groups, excluded_member=None, date=None):
         if date is None:
-            # date = datetime.now().strftime(DATETIME_FORMAT)
             date = datetime.now()
         item = {
             "date": date,
