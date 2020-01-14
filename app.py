@@ -1,19 +1,19 @@
-import os
 import json
+import os
+
+from flask import Flask, request
 
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from flask import Flask, request
-
-from src.main import generate_response
-from src.constants import *
+from src.constants.constants import BOT_NAME
 from src.store.clients import PyMongoClient, GraphMongoClient, GroupingMongoClient
+from src.main import generate_response
 
 app = Flask(__name__)
 
-GRAPH_CLIENT = GraphMongoClient()
-GROUPING_CLIENT = GroupingMongoClient()
+graph_client = GraphMongoClient()
+grouping_client = GroupingMongoClient()
 
 def send_message(msg):
     url = 'https://api.groupme.com/v3/bots/post'
@@ -29,7 +29,7 @@ def send_message(msg):
 def should_generate_response(data):
     msg_sender = data['name']
     msg = data['text']
-    # ignore our own messages
+    # ignore messages sent by the bot
     if msg_sender == BOT_NAME:
         return False
     # check if message first word references bot name, ignore @ sign
@@ -42,8 +42,7 @@ def should_generate_response(data):
 def webhook():
     data = request.get_json()
     if should_generate_response(data):
-        response = generate_response(data, GRAPH_CLIENT, GROUPING_CLIENT)
+        response = generate_response(data, graph_client, grouping_client)
         if response is not None:
             send_message(response)
-
     return "OK", 200

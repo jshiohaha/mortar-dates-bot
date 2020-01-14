@@ -1,6 +1,10 @@
 import itertools
 
-def format_groupings_to_readable_format(groupings, excluded_member):
+#  ===================================
+#          GROUPING STR UTILS
+#  ===================================
+
+def groupings_to_str(groupings, excluded_member):
     response = "Mortar Dates 🤟🏼\n\n"
     for idx in range(len(groupings)):
         group = groupings[idx]
