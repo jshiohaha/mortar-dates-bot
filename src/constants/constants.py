@@ -4,13 +4,13 @@ BOT_NAME = os.getenv('BOT_NAME')
 
 GROUP_SIZE = 2
 
+# RIP Cooper Wright :(
 MEMBERS = [
     "Alex Otto",
     "Braden Dvorak",
     "Bree Hurt",
     "Cheyenne Gerlach",
     "Connor Eksi",
-    "Cooper Wright",
     "Dylan Mathers",
     "Emily Johnson",
     "Frances Munro",

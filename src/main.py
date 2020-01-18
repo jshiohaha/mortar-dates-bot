@@ -40,5 +40,10 @@ def generate_new_dates(existing_groupings, graph_client, grouping_client):
     graph = graph_client.get_latest_graph_instance()['graph']
     groups, updated_graph = generate_new_groups(graph, existing_groupings, n=GROUP_SIZE)    
     graph_client.insert_graph_instance(updated_graph)
-    grouping_client.insert_grouping(groups[1:], excluded_member=groups[0][0])
-    return groupings_to_str(groups[1:], groups[0][0])
+    excluded_member = None
+    groups = groups
+    if len(groups[0]) == 1:
+        excluded_member = groups[0][0]
+        groups = groups[1:]
+    grouping_client.insert_grouping(groups, excluded_member=excluded_member)
+    return groupings_to_str(groups, excluded_member)

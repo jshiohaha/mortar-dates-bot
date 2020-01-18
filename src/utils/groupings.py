@@ -18,7 +18,7 @@ def generate_excluded_member(existing_groups):
 
 def generate_new_groups(graph, existing_groups, n=2):
     groups = list()
-    members = list(graph.keys())
+    members = [member for member in MEMBERS]
     # if a single person will be left out, we will generate a new excluded member
     if len(members) % n == 1:
         excluded_member = generate_excluded_member(existing_groups)
