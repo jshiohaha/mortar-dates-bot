@@ -2,19 +2,18 @@ import json
 import os
 
 from flask import Flask, request
+from flask_injector import FlaskInjector
+from injector import inject
 
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from src.constants.constants import BOT_NAME
-from src.store.clients import PyMongoClient, GraphMongoClient, GroupingMongoClient
-from src.main import generate_response
+from .src.constants.constants import BOT_NAME
+from .src.dependencies import configure
+from .src.store.clients import PyMongoClient, GraphMongoClient, GroupingMongoClient
+from .src.response_generator import ResponseGenerator
 
 app = Flask(__name__)
-
-graph_client = GraphMongoClient()
-grouping_client = GroupingMongoClient()
-
 
 def send_message(msg):
     url = 'https://api.groupme.com/v3/bots/post'
@@ -38,12 +37,19 @@ def should_generate_response(data):
         return False
     return True
 
-
+@inject
 @app.route('/', methods=['POST'])
-def webhook():
+def webhook(generator: ResponseGenerator):
     data = request.get_json()
     if should_generate_response(data):
-        response = generate_response(data, graph_client, grouping_client)
+        response = generator.generate_response(data)
         if response is not None:
             send_message(response)
     return "OK", 200
+
+@inject
+@app.route('/', methods=['GET'])
+def test(generator: ResponseGenerator):
+    return generator.status(), 200
+
+FlaskInjector(app=app, modules=[configure])
