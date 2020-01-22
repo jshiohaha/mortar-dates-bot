@@ -42,3 +42,9 @@ PYMONGO_USERNAME = os.getenv('PYMONGO_USERNAME')
 PYMONGO_PASSWORD = os.getenv('PYMONGO_PASSWORD')
 PYMONGO_GRAPH_COLLECTION = os.getenv('PYMONGO_GRAPH_COLLECTION')
 PYMONGO_GROUPING_COLLECTION = os.getenv('PYMONGO_GROUPING_COLLECTION')
+
+if os.getenv("HEROKU_ENV") == "DEV" or os.getenv('HEROKU_ENV') is None:
+    try:
+        from .dev_constants import * 
+    except Exception as e:
+        raise Exception("Detected development environment, but failed to load constants from dev_constants.")
