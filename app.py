@@ -15,16 +15,16 @@ app = Flask(__name__)
 graph_client = GraphMongoClient()
 grouping_client = GroupingMongoClient()
 
+
 def send_message(msg):
     url = 'https://api.groupme.com/v3/bots/post'
-
     data = {
         'bot_id': os.getenv('GROUPME_BOT_ID'),
         'text': msg
     }
-
     request = Request(url, urlencode(data).encode())
-    json = urlopen(request).read().decode()
+    urlopen(request).read().decode()
+
 
 def should_generate_response(data):
     msg_sender = data['name']
@@ -34,9 +34,10 @@ def should_generate_response(data):
         return False
     # check if message first word references bot name, ignore @ sign
     msg_first_word = msg.split(" ")[0]
-    if msg_first_word[1:] != BOT_NAME:
+    if msg_first_word != "@{0}".format(BOT_NAME):
         return False
     return True
+
 
 @app.route('/', methods=['POST'])
 def webhook():

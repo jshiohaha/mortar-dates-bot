@@ -1,5 +1,15 @@
 import os
 
+# ----------------------------------------
+#               BOT COMMANDS
+# 
+# NOTE: any command will be prepended with
+# the a textual reference to the bot's name
+# ----------------------------------------
+CURRENT_DATES_COMMAND = "current dates"
+NEW_DATES_COMMAND = "new dates"
+HELP_COMMAND = "help"
+
 BOT_NAME = os.getenv('BOT_NAME')
 
 GROUP_SIZE = 2

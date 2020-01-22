@@ -1,12 +1,9 @@
 from datetime import datetime
-import pymongo 
+import pymongo
 
 from ..constants.constants import PYMONGO_HOSTNAME, PYMONGO_USERNAME, PYMONGO_PASSWORD, PYMONGO_DB_NAME, PYMONGO_GRAPH_COLLECTION, PYMONGO_GROUPING_COLLECTION
-from ..utils.utils import build_graph
+from ..utils.general import build_graph
 
-#  ===========================
-#          HANDLE I/O
-#  ===========================
 
 class PyMongoClient:
     hostname = PYMONGO_HOSTNAME
@@ -14,7 +11,13 @@ class PyMongoClient:
     password = PYMONGO_PASSWORD
 
     def __init__(self):
-        self.mongoDbUrl = "mongodb+srv://{}:{}@{}/admin?keepAlive=true&poolSize=30&autoReconnect=true&socketTimeoutMS=360000&connectTimeoutMS=360000".format(self.username, self.password, self.hostname)
+        self.mongoDbUrl = ("mongodb+srv://{}:{}@{}/admin?"
+                           "keepAlive=true&poolSize=30"
+                           "&autoReconnect=true"
+                           "&socketTimeoutMS=360000"
+                           "&connectTimeoutMS=360000").format(self.username,
+                                                              self.password,
+                                                              self.hostname)
         self.client = pymongo.MongoClient(self.mongoDbUrl, port=27017)
         self.database = None
         self.collection = None
@@ -81,5 +84,6 @@ class GroupingMongoClient(PyMongoClient):
         return list(self._getCollection().find({}))
 
     def get_latest_grouping(self):
-        query_result = self._getCollection().find().sort('date', pymongo.DESCENDING).limit(1)
+        query_result = self._getCollection().find().sort(
+            'date', pymongo.DESCENDING).limit(1)
         return list(query_result)[0]
