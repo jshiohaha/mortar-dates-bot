@@ -8,10 +8,10 @@ from injector import inject
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from .src.constants.constants import BOT_NAME, GROUPME_BOT_ID
-from .src.dependencies import configure
-from .src.store.clients import PyMongoClient, GraphMongoClient, GroupingMongoClient
-from .src.response_generator import ResponseGenerator
+from src.constants.constants import BOT_NAME, GROUPME_BOT_ID
+from src.dependencies import configure
+from src.store.clients import PyMongoClient, GraphMongoClient, GroupingMongoClient
+from src.response_generator import ResponseGenerator
 
 app = Flask(__name__)
 
