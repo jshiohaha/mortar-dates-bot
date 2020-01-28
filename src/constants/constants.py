@@ -44,8 +44,9 @@ MEMBERS = [
     "Vinny Malene"
 ]
 
-MONDAY = 0
+NEW_DATES_DAY = 0 # Monday
 
+GROUPME_BOT_ID = os.getenv('GROUPME_BOT_ID')
 PYMONGO_DB_NAME = os.getenv('PYMONGO_DB_NAME')
 PYMONGO_HOSTNAME = os.getenv('PYMONGO_HOSTNAME')
 PYMONGO_USERNAME = os.getenv('PYMONGO_USERNAME')
@@ -53,7 +54,7 @@ PYMONGO_PASSWORD = os.getenv('PYMONGO_PASSWORD')
 PYMONGO_GRAPH_COLLECTION = os.getenv('PYMONGO_GRAPH_COLLECTION')
 PYMONGO_GROUPING_COLLECTION = os.getenv('PYMONGO_GROUPING_COLLECTION')
 
-if os.getenv("HEROKU_ENV") == "DEV" or os.getenv('HEROKU_ENV') is None:
+if os.getenv('ENV') == 'DEV' or os.getenv('ENV') is None:
     try:
         from .dev_constants import * 
     except Exception as e:

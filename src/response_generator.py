@@ -3,7 +3,7 @@ import os
 
 from injector import inject
 
-from .constants.constants import MONDAY, BOT_NAME, GROUP_SIZE, CURRENT_DATES_COMMAND, HELP_COMMAND, NEW_DATES_COMMAND
+from .constants.constants import NEW_DATES_DAY, BOT_NAME, GROUP_SIZE, CURRENT_DATES_COMMAND, HELP_COMMAND, NEW_DATES_COMMAND
 from .utils.groupings import generate_new_groups, groupings_to_str
 from .store.clients import GraphMongoClient, GroupingMongoClient
 
@@ -40,7 +40,7 @@ class ResponseGenerator:
     def handle_new_dates_command(self):
         most_recent_grouping = self.grouping_client.get_latest_grouping()
         now = datetime.now()
-        if now.weekday() == MONDAY and (now-most_recent_grouping['date']).days >= 6:
+        if now.weekday() == NEW_DATES_DAY and (now-most_recent_grouping['date']).days >= 6:
             all_groupings = self.grouping_client.get_all_groupings()
             return self.generate_new_dates(all_groupings)
         # current date + days until next monday
