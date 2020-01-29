@@ -2,9 +2,9 @@ import itertools
 
 
 def build_empty_graph(items):
-    graph = dict()
+    graph = {}
     for item in items:
-        graph[item] = list()
+        graph[item] = []
     return graph
 
 

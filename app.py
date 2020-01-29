@@ -1,6 +1,3 @@
-import json
-import os
-
 from flask import Flask, request
 from flask_injector import FlaskInjector
 from injector import inject
@@ -10,7 +7,6 @@ from urllib.request import Request, urlopen
 
 from src.constants.constants import BOT_NAME, GROUPME_BOT_ID
 from src.dependencies import configure
-from src.store.clients import PyMongoClient, GraphMongoClient, GroupingMongoClient
 from src.response_generator import ResponseGenerator
 
 app = Flask(__name__)
@@ -21,8 +17,10 @@ def send_message(msg):
         'bot_id': GROUPME_BOT_ID,
         'text': msg
     }
-    request = Request(url, urlencode(data).encode())
-    urlopen(request).read().decode()
+    # not validating URL becauase it is fixed above, not
+    # manipulatable by an external user 
+    req = Request(url, urlencode(data).encode())
+    urlopen(req).read().decode()
 
 
 def should_generate_response(data):

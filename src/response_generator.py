@@ -52,12 +52,12 @@ class ResponseGenerator:
 
     def generate_response(self, data):
         msg = " ".join(data['text'].split(" ")[1:]).lower()
+        print(msg)
         if msg == CURRENT_DATES_COMMAND:
             return self.handle_current_dates_command()
-        elif msg == NEW_DATES_COMMAND:
+        if msg == NEW_DATES_COMMAND:
             return self.handle_new_dates_command()
-        elif msg == HELP_COMMAND:
-            BOT_NAME = os.getenv('BOT_NAME')
+        if msg == HELP_COMMAND:
             return ("Usage:\n\n"
                     "@{0} current dates --> see the current dates.\n"
                     "@{0} new dates --> get new dates (once a week) 🥳.\n"

@@ -5,12 +5,11 @@ from ..constants.constants import MEMBERS
 
 def groupings_to_str(groupings, excluded_member):
     response = "Mortar Dates 🤟🏼\n\n"
-    for idx in range(len(groupings)):
-        group = groupings[idx]
+    for idx, group in enumerate(groupings):
         response += "{}: {} & {}\n".format((idx+1), group[0], group[1])
-    if excluded_member is not None:
-        response += ("\n{} was left out this week 🙁 Join another date or "
-                     "wait until next week.").format(excluded_member)
+        if excluded_member is not None:
+            response += ("\n{} was left out this week 🙁 Join another date or "
+                        "wait until next week.").format(excluded_member)
     return response
 
 
@@ -19,15 +18,15 @@ def generate_excluded_member(existing_groups):
     if len(MEMBERS) % 2 == 0:
         return excluded_member
     # get previously excluded members so that the same member is not excluded >1 time
-    previously_excluded_members = set(
-        [member for pairing in existing_groups for member in pairing['excluded'] if member is not None])
+    previously_excluded_members = {
+        member for pairing in existing_groups for member in pairing['excluded'] if member is not None}
     while excluded_member is None or excluded_member in previously_excluded_members:
         excluded_member = random.choice(MEMBERS)
     return excluded_member
 
 
 def generate_new_groups(graph, existing_groups, n=2):
-    groups = list()
+    groups = []
     members = [member for member in MEMBERS]
     # if a single person will be left out, we will generate a new excluded member
     if len(members) % n == 1:
@@ -37,7 +36,7 @@ def generate_new_groups(graph, existing_groups, n=2):
 
     while len(members) > n:
         group_size = 0
-        group = list()
+        group = []
         member = None
         while group_size < n:
             if group_size == 0:

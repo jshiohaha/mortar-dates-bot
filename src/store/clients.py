@@ -2,7 +2,6 @@ from datetime import datetime
 import pymongo
 
 from ..constants.constants import PYMONGO_HOSTNAME, PYMONGO_USERNAME, PYMONGO_PASSWORD, PYMONGO_DB_NAME, PYMONGO_GRAPH_COLLECTION, PYMONGO_GROUPING_COLLECTION
-from ..utils.general import build_graph
 
 
 class PyMongoClient:
