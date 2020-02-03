@@ -54,7 +54,7 @@ PYMONGO_PASSWORD = os.getenv('PYMONGO_PASSWORD')
 PYMONGO_GRAPH_COLLECTION = os.getenv('PYMONGO_GRAPH_COLLECTION')
 PYMONGO_GROUPING_COLLECTION = os.getenv('PYMONGO_GROUPING_COLLECTION')
 
-if os.getenv('ENV') == 'DEV' or os.getenv('ENV') is None:
+if os.getenv('ENV') is None or os.getenv('ENV') == 'DEV':
     try:
         from .dev_constants import * 
     except Exception as e:
