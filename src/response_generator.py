@@ -3,7 +3,7 @@ import os
 
 from injector import inject
 
-from .constants.constants import NEW_DATES_DAY, BOT_NAME, GROUP_SIZE, CURRENT_DATES_COMMAND, HELP_COMMAND, NEW_DATES_COMMAND
+from .constants.constants import NEW_DATES_DAY, BOT_NAME, GROUP_SIZE, CURRENT_DATES_COMMAND, HELP_COMMAND, NEW_DATES_COMMAND, YOU_UP_COMMAND
 from .utils.groupings import generate_new_groups, groupings_to_str
 from .store.clients import GraphMongoClient, GroupingMongoClient
 
@@ -63,6 +63,8 @@ class ResponseGenerator:
             return self.handle_current_dates_command()
         if msg == NEW_DATES_COMMAND:
             return self.handle_new_dates_command()
+        if msg == YOU_UP_COMMAND:
+            return "😏"
         if msg == HELP_COMMAND:
             return ("Usage:\n\n"
                     "@{0} current dates --> see the current dates.\n"
