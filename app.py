@@ -19,6 +19,7 @@ def send_message(msg):
     }
     # not validating URL becauase it is fixed above, not
     # manipulatable by an external user 
+    print("posting response msg: {}".format(msg))
     req = Request(url, urlencode(data).encode())
     urlopen(req).read().decode()
 

@@ -19,20 +19,25 @@ class ResponseGenerator:
         return str(self.grouping_client.get_latest_grouping())
 
     def handle_current_dates_command(self):
+        print("getting current dates")
         current_groupings = self.grouping_client.get_latest_grouping()
         excluded_member = current_groupings['excluded'][0]
         return groupings_to_str(current_groupings['groupings'], excluded_member)
 
     def generate_new_dates(self, all_groupings):
+        print("generating new dates")
         graph = self.graph_client.get_latest_graph_instance()['graph']
         groups, updated_graph = generate_new_groups(
             graph, all_groupings, n=GROUP_SIZE)
+        print("inserting graph into mongo")
         self.graph_client.insert_graph_instance(updated_graph)
         excluded_member = None
         groups = groups
         if len(groups[0]) == 1:
+            print("found an excluded member")
             excluded_member = groups[0][0]
             groups = groups[1:]
+        print("inserting grouping into mongo")
         self.grouping_client.insert_grouping(
             groups, excluded_member=excluded_member)
         return groupings_to_str(groups, excluded_member)
@@ -40,6 +45,7 @@ class ResponseGenerator:
     def handle_new_dates_command(self):
         most_recent_grouping = self.grouping_client.get_latest_grouping()
         now = datetime.now()
+        print("checking if it is time for new dates")
         if now.weekday() == NEW_DATES_DAY and (now-most_recent_grouping['date']).days >= 6:
             all_groupings = self.grouping_client.get_all_groupings()
             return self.generate_new_dates(all_groupings)
