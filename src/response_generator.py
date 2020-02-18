@@ -46,8 +46,7 @@ class ResponseGenerator:
         most_recent_grouping = self.grouping_client.get_latest_grouping()
         now = datetime.now()
         print("checking if it is time for new dates")
-        # now.weekday() == NEW_DATES_DAY and
-        if (now-most_recent_grouping['date']).days >= 6:
+        if now.weekday() == NEW_DATES_DAY and (now-most_recent_grouping['date']).days >= 6:
             all_groupings = self.grouping_client.get_all_groupings()
             return self.generate_new_dates(all_groupings)
         # current date + days until next monday
