@@ -9,7 +9,6 @@ import os
 CURRENT_DATES_COMMAND = "current dates"
 NEW_DATES_COMMAND = "new dates"
 HELP_COMMAND = "help"
-YOU_UP_COMMAND = "you up"
 
 BOT_NAME = os.getenv('BOT_NAME')
 

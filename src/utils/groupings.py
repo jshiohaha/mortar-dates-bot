@@ -46,8 +46,18 @@ def generate_new_groups(graph, existing_groups, n=2):
                 # possible partners are members that have not been chosen for another group
                 # and have never been paired with the current member
                 possible_partners = list(set(members) & set(graph[member]))
-                partner = random.choice(possible_partners)
+                print("Looking for partners for {}".format(member))
+                print(possible_partners)
+                print("\n")
 
+                if possible_partners is None:
+                    print("No possilbe partners for {}".format(member))
+                    # could generate an infinite loop? we might need to
+                    # remove this person from the list of members
+                    member = random.choice(members)
+                    continue
+    
+                partner = random.choice(possible_partners)
                 # update edges in graph for both member and partner
                 graph[member].remove(partner)
                 graph[partner].remove(member)
