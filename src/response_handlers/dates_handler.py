@@ -1,14 +1,15 @@
-from datetime import datetime, timedelta
 import os
+from datetime import datetime, timedelta
 
 from injector import inject
 
-from .constants.constants import NEW_DATES_DAY, BOT_NAME, GROUP_SIZE, CURRENT_DATES_COMMAND, HELP_COMMAND, NEW_DATES_COMMAND
-from .utils.groupings import generate_new_groups, groupings_to_str
-from .store.clients import GraphMongoClient, GroupingMongoClient
+from ..constants.constants import NEW_DATES_DAY, BOT_NAME, GROUP_SIZE
+from ..constants.commands import CURRENT_DATES_COMMAND, NEW_DATES_COMMAND
+from ..utils.groupings import generate_new_groups, groupings_to_str
+from ..store.clients import GraphMongoClient, GroupingMongoClient
 
 
-class ResponseGenerator:
+class DatesHandler:
     @inject
     def __init__(self, graph_client: GraphMongoClient,
                  grouping_client: GroupingMongoClient):
@@ -27,8 +28,12 @@ class ResponseGenerator:
     def generate_new_dates(self, all_groupings):
         print("generating new dates")
         graph = self.graph_client.get_latest_graph_instance()['graph']
-        groups, updated_graph = generate_new_groups(
-            graph, all_groupings, n=GROUP_SIZE)
+        groups, updated_graph = None, None
+        try:
+            groups, updated_graph = generate_new_groups(
+                graph, all_groupings, n=GROUP_SIZE)
+        except Exception as e:
+                raise Exception("Failed creating new groupings. Maybe try again? Here is the actual error: {}".format(e))
         print("inserting graph into mongo")
         self.graph_client.insert_graph_instance(updated_graph)
         excluded_member = None
@@ -56,15 +61,11 @@ class ResponseGenerator:
                     new_dates_date,
                     "%A, %B %d, %Y"))
 
-    def generate_response(self, data):
-        msg = " ".join(data['text'].split(" ")[1:]).lower()
-        print(msg)
-        if msg == CURRENT_DATES_COMMAND:
+    def generate_response(self, message_struct):
+        command_args = message_struct.tokens.get("cmd_args")
+        # message_struct todo
+        if command_args == CURRENT_DATES_COMMAND:
             return self.handle_current_dates_command()
-        if msg == NEW_DATES_COMMAND:
+        if command_args == NEW_DATES_COMMAND:
             return self.handle_new_dates_command()
-        if msg == HELP_COMMAND:
-            return ("Usage:\n\n"
-                    "@{0} current dates --> see the current dates.\n"
-                    "@{0} new dates --> get new dates (once a week) 🥳.\n"
-                    "@{0} help --> get info on how to invoke bot 🤖.").format(BOT_NAME)
+
