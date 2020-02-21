@@ -5,7 +5,7 @@ from injector import inject
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from src.constants.constants import BOT_NAME, GROUPME_BOT_ID
+from src.constants.constants import BOT_NAME, GROUPME_BOT_ID, MOTORBOT
 from src.dependencies import configure
 from src.response_handlers.dates_handler import DatesHandler
 from src.response_handlers.tweets_handler import TweetsHandler
@@ -35,6 +35,8 @@ def should_generate_response(message_struct):
     # check if message first word references bot name, ignore @ sign
     msg_first_word = message_struct.tokens.get("invocation_keyword")
     if msg_first_word[1:] != BOT_NAME:
+        if msg_first_word[1:] == MOTORBOT:
+            raise Exception("Bruh, my name is {}... NOT {}".format(BOT_NAME, MOTORBOT))
         return False
     return True
 

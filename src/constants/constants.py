@@ -1,6 +1,7 @@
 import os
 
 BOT_NAME = os.getenv('BOT_NAME')
+MOTORBOT = "motorbot"
 
 GROUP_SIZE = 2
 
