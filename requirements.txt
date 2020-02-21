@@ -3,3 +3,4 @@ gunicorn==19.6.0
 pymongo==3.10.1
 dnspython==1.16.0
 Flask-Injector==0.12.1
+tweepy==3.8.0
