@@ -44,6 +44,8 @@ class TweetsHandler:
     def get_random_tweet_with_query(self, query):
         MAX_TWEETS = 10
         searched_tweets = [status for status in tweepy.Cursor(self.api_client.search, q=query).items(MAX_TWEETS)]
+        if len(searched_tweets) == 0:
+            return "No tweet matches found for query: {}".format(query)
         random_idx = random.randrange(0, len(searched_tweets), 1)
         status = searched_tweets[random_idx]
         return self._get_full_tweet_text(status)
