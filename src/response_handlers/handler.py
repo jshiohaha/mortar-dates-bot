@@ -23,8 +23,8 @@ class Handler:
             return self.tweets_handler.generate_response(message_struct)
         elif command == HELP_COMMAND:
             return ("Usage:\n\n"
-                    "@{0} current dates : see the current dates.\n"
-                    "@{0} new dates : get new dates (once a week) 🥳.\n"
+                    "@{0} dates current : see the current dates.\n"
+                    "@{0} dates new : get new dates (once a week) 🥳.\n"
                     "@{0} trumpme : see a random tweet from donnie trump.\n"
                     "@{0} search <non-empy query string> : see a random tweet based on your query.\n"
                     "@{0} help : get info on how to invoke bot 🤖.").format(BOT_NAME)
