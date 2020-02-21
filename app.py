@@ -49,7 +49,8 @@ def webhook(handler: Handler):
             response = handler.generate_response(message_struct)
         except Exception as e:
             response = "Oops, sorry. Something happened during your request: {}".format(e)
-    return response, 200
+        send_message(response)
+    return "OK", 200
 
 
 FlaskInjector(app=app, modules=[configure])
