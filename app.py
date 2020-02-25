@@ -5,12 +5,12 @@ from injector import inject
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from .src.constants.constants import BOT_NAME, GROUPME_BOT_ID, MOTORBOT, MORTARBOT
-from .src.dependencies import configure
-from .src.response_handlers.dates_handler import DatesHandler
-from .src.response_handlers.tweets_handler import TweetsHandler
-from .src.response_handlers.handler import Handler
-from .src.model.message_struct import MessageStruct
+from src.constants.constants import BOT_NAME, GROUPME_BOT_ID, MOTORBOT, MORTARBOT
+from src.dependencies import configure
+from src.response_handlers.dates_handler import DatesHandler
+from src.response_handlers.tweets_handler import TweetsHandler
+from src.response_handlers.handler import Handler
+from src.model.message_struct import MessageStruct
 
 app = Flask(__name__)
 
