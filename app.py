@@ -50,7 +50,7 @@ def webhook(handler: Handler):
             response = handler.generate_response(message_struct)
     except Exception as e:
         response = "[EXCEPTION]: {}".format(e)
-        send_message(response)
+    send_message(response)
     return "OK", 200
 
 FlaskInjector(app=app, modules=[configure])
