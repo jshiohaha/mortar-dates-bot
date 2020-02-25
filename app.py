@@ -5,15 +5,14 @@ from injector import inject
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from src.constants.constants import BOT_NAME, GROUPME_BOT_ID, MOTORBOT
-from src.dependencies import configure
-from src.response_handlers.dates_handler import DatesHandler
-from src.response_handlers.tweets_handler import TweetsHandler
-from src.response_handlers.handler import Handler
-from src.model.message_struct import MessageStruct
+from .src.constants.constants import BOT_NAME, GROUPME_BOT_ID, MOTORBOT, MORTARBOT
+from .src.dependencies import configure
+from .src.response_handlers.dates_handler import DatesHandler
+from .src.response_handlers.tweets_handler import TweetsHandler
+from .src.response_handlers.handler import Handler
+from .src.model.message_struct import MessageStruct
 
 app = Flask(__name__)
-
 
 def send_message(msg):
     ''' MessageStruct msg '''
@@ -35,8 +34,8 @@ def should_generate_response(message_struct):
     # check if message first word references bot name, ignore @ sign
     msg_first_word = message_struct.tokens.get("invocation_keyword")
     if msg_first_word[1:] != BOT_NAME:
-        if msg_first_word[1:] == MOTORBOT:
-            raise Exception("Bruh, my name is {}... NOT {}".format(BOT_NAME, MOTORBOT))
+        if msg_first_word[1:] in [MOTORBOT, MORTARBOT]:
+            raise Exception("Bruh, my name is {}... NOT {}".format(BOT_NAME, msg_first_word[1:]))
         return False
     return True
 
@@ -46,13 +45,12 @@ def webhook(handler: Handler):
     data = request.get_json()
     message_struct = MessageStruct(data)
     response = ""
-    if should_generate_response(message_struct):
-        try:
+    try:
+        if should_generate_response(message_struct):
             response = handler.generate_response(message_struct)
-        except Exception as e:
-            response = "Oops, sorry. Something happened during your request: {}".format(e)
+    except Exception as e:
+        response = "[EXCEPTION]: {}".format(e)
         send_message(response)
     return "OK", 200
-
 
 FlaskInjector(app=app, modules=[configure])
